@@ -1,11 +1,10 @@
-use std::fs;
+use crate::util;
 
 pub fn read_and_split() -> Vec<usize> {
-    let path = "./src/day01/input.txt";
-    let contents = fs::read_to_string(path).unwrap();
+    let contents = util::read_split("./src/day01_input.txt");
 
     contents
-        .split("\n")
+        .iter()
         .fold((vec![], 0), |(mut res, sum), cur| {
             match cur.parse::<usize>() {
                 Ok(num) => (res, sum + num),
