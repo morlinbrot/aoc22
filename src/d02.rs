@@ -83,7 +83,7 @@ impl From<&Mv> for Res {
 }
 
 pub fn part_two() -> usize {
-    let str = std::fs::read_to_string("./src/day02_input.txt").unwrap();
+    let str = std::fs::read_to_string("./src/d02_input.txt").unwrap();
 
     str.lines().fold(0, |sum, line| {
         let round: Vec<Mv> = line.split_whitespace().map(Into::into).collect();
@@ -95,7 +95,7 @@ pub fn part_two() -> usize {
 }
 
 pub fn part_one() -> usize {
-    let str = std::fs::read_to_string("./src/day02_input.txt").unwrap();
+    let str = std::fs::read_to_string("./src/d02_input.txt").unwrap();
 
     str.lines().fold(0, |sum, line| {
         let round: Vec<Mv> = line.split_whitespace().map(Into::into).collect();

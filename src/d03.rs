@@ -10,7 +10,7 @@ fn make_map() -> HashMap<char, usize> {
 
 pub fn part_two() -> usize {
     let map = make_map();
-    let str = std::fs::read_to_string("./src/day03_input.txt").unwrap();
+    let str = std::fs::read_to_string("./src/d03_input.txt").unwrap();
     let groups = str.lines().collect::<Vec<&str>>();
 
     groups.chunks(3).fold(0, |sum, group| {
@@ -24,7 +24,7 @@ pub fn part_two() -> usize {
 }
 
 pub fn part_one() -> usize {
-    let str = std::fs::read_to_string("./src/day03_input.txt").unwrap();
+    let str = std::fs::read_to_string("./src/d03_input.txt").unwrap();
 
     let map = make_map();
     str.lines().fold(0, |sum, line| {

@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 pub fn parse_input() -> (Vec<Vec<char>>, Vec<Vec<usize>>) {
-    let str = std::fs::read_to_string("./src/day05_input").unwrap();
+    let str = std::fs::read_to_string("./src/d05_input").unwrap();
 
     let (raw_stacks, raw_moves) = str.split_once("\n\n").unwrap();
 

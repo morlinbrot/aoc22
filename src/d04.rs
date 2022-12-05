@@ -1,5 +1,5 @@
 pub fn part_two() -> usize {
-    let str = std::fs::read_to_string("./src/day04_input").unwrap();
+    let str = std::fs::read_to_string("./src/d04_input").unwrap();
     str.lines()
         .map(|line| {
             line.split([',', '-'])
@@ -11,7 +11,7 @@ pub fn part_two() -> usize {
 }
 
 pub fn part_one() -> usize {
-    let str = std::fs::read_to_string("./src/day04_input").unwrap();
+    let str = std::fs::read_to_string("./src/d04_input").unwrap();
     str.lines()
         .map(|line| {
             line.split([',', '-'])

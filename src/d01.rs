@@ -1,7 +1,7 @@
 use crate::util;
 
 pub fn read_and_split() -> Vec<usize> {
-    let contents = util::read_split("./src/day01_input.txt");
+    let contents = util::read_split("./src/d01_input.txt");
 
     contents
         .iter()
