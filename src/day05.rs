@@ -1,63 +1,57 @@
 use std::collections::HashMap;
 
-type Stacks = HashMap<usize, Vec<char>>;
-type Moves = Vec<Vec<usize>>;
-
-pub fn parse_input() -> (Stacks, Moves) {
+pub fn parse_input() -> (Vec<Vec<char>>, Vec<Vec<usize>>) {
     let str = std::fs::read_to_string("./src/day05_input").unwrap();
 
-    let mut stacks: HashMap<usize, Vec<char>> = HashMap::new();
-    let mut moves: Vec<Vec<usize>> = vec![];
+    let (raw_stacks, raw_moves) = str.split_once("\n\n").unwrap();
 
-    for line in str.lines() {
-        if line.starts_with("move") {
-            let splits: Vec<&str> = line.split(" ").collect();
-            let set: Vec<usize> = splits.iter().filter_map(|elm| elm.parse().ok()).collect();
-            moves.push(set);
-        } else {
-            for (i, c) in line.chars().enumerate() {
-                if c.is_alphabetic() {
-                    stacks
-                        .entry(i)
-                        .and_modify(|vec| vec.push(c))
-                        .or_insert(vec![c]);
-                }
+    let mut stacks: HashMap<usize, Vec<char>> = HashMap::new();
+    for line in raw_stacks.lines() {
+        for (i, c) in line.chars().enumerate() {
+            if c.is_alphabetic() {
+                stacks
+                    .entry(i)
+                    .and_modify(|vec| vec.push(c))
+                    .or_insert(vec![c]);
             }
         }
+    }
+
+    let mut moves: Vec<Vec<usize>> = vec![];
+    for line in raw_moves.lines() {
+        let splits: Vec<&str> = line.split(" ").collect();
+        let set: Vec<usize> = splits.iter().filter_map(|elm| elm.parse().ok()).collect();
+        moves.push(set);
     }
 
     let mut sorted: Vec<_> = stacks.drain().collect();
     sorted.sort();
 
-    for (i, s) in sorted.iter().cloned().enumerate() {
-        let stack: Vec<_> = s.1.into_iter().rev().collect();
-        stacks.insert(i + 1, stack);
-    }
+    let stacks: Vec<Vec<char>> = sorted
+        .into_iter()
+        .map(|(_, st)| st.into_iter().rev().collect())
+        .collect();
 
     (stacks, moves)
 }
 
-fn string_from_tops(stacks: Stacks) -> String {
-    let mut sorted: Vec<_> = stacks.into_iter().collect();
-    sorted.sort();
-    sorted
-        .into_iter()
-        .fold(String::new(), |mut res, mut stack| {
-            res.push(stack.1.pop().unwrap());
-            res
-        })
+fn string_from_tops(stacks: Vec<Vec<char>>) -> String {
+    stacks.into_iter().fold(String::new(), |mut str, mut vec| {
+        str.push(vec.pop().unwrap());
+        str
+    })
 }
 
 pub fn part_two() -> String {
     let (mut stacks, moves) = parse_input();
 
     for m in moves {
-        let (count, from_no, to_no) = (m[0], m[1], m[2]);
-        let from_stck = stacks.get_mut(&from_no).expect("Failed to find from_stck");
-        let mut v: Vec<_> = from_stck.drain(from_stck.len() - count..).collect();
+        let (count, from, to) = (m[0], m[1] - 1, m[2] - 1);
 
-        let to_stck = stacks.get_mut(&to_no).expect("Failed to find to_stck");
-        to_stck.append(&mut v);
+        let len = stacks[from].len();
+        let mut v: Vec<_> = stacks[from].drain(len - count..).collect();
+
+        stacks[to].append(&mut v);
     }
 
     string_from_tops(stacks)
@@ -67,15 +61,10 @@ pub fn part_one() -> String {
     let (mut stacks, moves) = parse_input();
 
     for m in moves {
-        let (count, from_no, to_no) = (m[0], m[1], m[2]);
+        let (count, from, to) = (m[0], m[1] - 1, m[2] - 1);
         for _ in 0..count {
-            let from_stck = stacks.get_mut(&from_no).expect("Failed to find from_stck");
-            let v = from_stck.pop();
-
-            if let Some(v) = v {
-                let stack = stacks.get_mut(&to_no).expect("Failed to find to_stck");
-                stack.push(v);
-            }
+            let v = stacks[from].pop().expect("Failed to pop");
+            stacks[to].push(v);
         }
     }
 
