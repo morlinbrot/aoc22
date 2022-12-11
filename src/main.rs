@@ -7,6 +7,7 @@ pub mod d06;
 pub mod d07;
 pub mod d08;
 pub mod d09;
+pub mod d10;
 pub mod util;
 
 pub fn main() {
@@ -26,8 +27,10 @@ pub fn main() {
     // println!("day07 p2: {:?}", d07::part_two());
     // println!("day08 p1: {:?}", d08::part_one());
     // println!("day08 p2: {:?}", d08::part_two());
-    println!("day09 p1: {:?}", d09::part_one());
-    println!("day09 p2: {:?}", d09::part_two());
+    // println!("day09 p1: {:?}", d09::part_one());
+    // println!("day09 p2: {:?}", d09::part_two());
+    println!("day10 p1: {:?}", d10::part_one());
+    println!("day10 p2: {:?}", d10::part_two());
 }
 
 #[cfg(test)]

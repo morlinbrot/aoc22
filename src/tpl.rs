@@ -12,4 +12,5 @@ pub fn part_one() -> usize {
 
 pub fn part_two() -> usize {
     //
+    0
 }
